@@ -32,3 +32,7 @@ def remove(path):
     
 def get_filename(file_path):
     return (os.path.split(file_path)[1])
+
+def mkdir(path):
+    if not os.path.exists(path):
+        os.makedirs(path)

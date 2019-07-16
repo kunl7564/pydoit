@@ -1,0 +1,6 @@
+pip install psutil
+
+python lk.py [servername]
+
+如果提示缺少Python.h
+yum search python-dev 再安装

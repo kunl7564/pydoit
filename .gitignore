@@ -1,3 +1,2 @@
-src/.idea/
-src/utils/__pycache__/
-
+*.pyc
+src/utils/file_utils.pyc

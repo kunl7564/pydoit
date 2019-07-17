@@ -4,7 +4,7 @@ from Tkinter import * ;
 root = Tk()  # 创建窗口对象的背景色
                                 # 创建两个列表
 def onClick():
-    print "clicked"
+    print("clicked")
     
 li = ['C', 'python', 'php', 'html', 'SQL', 'java']
 movie = ['CSS', 'jQuery', 'Bootstrap']

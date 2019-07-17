@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.python.pydev.pythonNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/tpson/run.py</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/JavaProjects/global_fire_fighting_platform/run.py</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>

@@ -3,6 +3,7 @@
 # conda install mysql-python
 import MySQLdb;
 import os;
+
 # db = MySQLdb.connect("182.61.39.220", "root", "Kulu@123", "test")
 db = MySQLdb.connect("127.0.0.1", "root", "tpson102304", "global_fire_fighting_platform")
 # 使用cursor()方法获取操作游标 
@@ -14,7 +15,7 @@ cursor.execute("SELECT VERSION()")
 data = cursor.fetchone()
 cursor.execute("show databases;")
 table_list = [tuple[0] for tuple in cursor.fetchall()]
-print table_list
+print(table_list)
 os._exit(0)
 
 # sql = """CREATE TABLE EMPLOYEE (
@@ -41,10 +42,10 @@ os._exit(0)
 sql = 'INSERT INTO carinfo(name,number) VALUES ("%s", "%s")' % ('lk2', 'lk3')
 try:
     row = cursor.execute(sql)
-    print row
+    print(row)
     db.commit()
 except Exception, e:
-    print "error", e
+    print("error", e)
     
 sql = 'select * from carinfo where id > 5'
 cursor.execute(sql)

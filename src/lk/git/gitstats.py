@@ -56,8 +56,8 @@ def getpipeoutput(cmds, quiet=False):
 	global exectime_external
 	start = time.time()
 	if not quiet and ON_LINUX and os.isatty(1):
-		print '>> ' + ' | '.join(cmds),
-		sys.stdout.flush()
+		print('>> ' + ' | '.join(cmds),
+		sys.stdout.flush())
 	p = subprocess.Popen(cmds[0], stdout=subprocess.PIPE, shell=True)
 	processes = [p]
 	for x in cmds[1:]:
@@ -69,8 +69,8 @@ def getpipeoutput(cmds, quiet=False):
 	end = time.time()
 	if not quiet:
 		if ON_LINUX and os.isatty(1):
-			print '\r',
-		print '[%.5f] >> %s' % (end - start, ' | '.join(cmds))
+			print('\r',)
+		print('[%.5f] >> %s' % (end - start, ' | '.join(cmds)))
 	exectime_external += (end - start)
 	return output.rstrip('\n')
 
@@ -212,7 +212,7 @@ class DataCollector:
 	def loadCache(self, cachefile):
 		if not os.path.exists(cachefile):
 			return
-		print 'Loading cache...'
+		print('Loading cache...')
 		f = open(cachefile, 'rb')
 		try:
 			self.cache = pickle.loads(zlib.decompress(f.read()))
@@ -274,7 +274,7 @@ class DataCollector:
 	# #
 	# Save cacheable data
 	def saveCache(self, cachefile):
-		print 'Saving cache...'
+		print('Saving cache...')
 		tempfile = cachefile + '.tmp'
 		f = open(tempfile, 'wb')
 		# pickle.dump(self.cache, f)
@@ -483,7 +483,7 @@ class GitDataCollector(DataCollector):
 			try:
 				self.files_by_stamp[int(stamp)] = int(files)
 			except ValueError:
-				print 'Warning: failed to parse line "%s"' % line
+				print('Warning: failed to parse line "%s"' % line)
 
 		# extensions and size of files
 		lines = getpipeoutput(['git ls-tree -r -l -z %s' % getcommitrange('HEAD', end_only=True)]).split('\000')
@@ -572,9 +572,9 @@ class GitDataCollector(DataCollector):
 
 						files, inserted, deleted = 0, 0, 0
 					except ValueError:
-						print 'Warning: unexpected line "%s"' % line
+						print('Warning: unexpected line "%s"' % line)
 				else:
-					print 'Warning: unexpected line "%s"' % line
+					print('Warning: unexpected line "%s"' % line)
 			else:
 				numbers = getstatsummarycounts(line)
 
@@ -586,7 +586,7 @@ class GitDataCollector(DataCollector):
 					self.total_lines_removed += deleted
 
 				else:
-					print 'Warning: failed to handle line "%s"' % line
+					print('Warning: failed to handle line "%s"' % line)
 					(files, inserted, deleted) = (0, 0, 0)
 				# self.changes_by_date[stamp] = { 'files': files, 'ins': inserted, 'del': deleted }
 		self.total_lines += total_lines
@@ -631,16 +631,16 @@ class GitDataCollector(DataCollector):
 						self.changes_by_date_by_author[stamp][author]['commits'] = self.authors[author]['commits']
 						files, inserted, deleted = 0, 0, 0
 					except ValueError:
-						print 'Warning: unexpected line "%s"' % line
+						print('Warning: unexpected line "%s"' % line)
 				else:
-					print 'Warning: unexpected line "%s"' % line
+					print('Warning: unexpected line "%s"' % line)
 			else:
 				numbers = getstatsummarycounts(line);
 
 				if len(numbers) == 3:
 					(files, inserted, deleted) = map(lambda el : int(el), numbers)
 				else:
-					print 'Warning: failed to handle line "%s"' % line
+					print('Warning: failed to handle line "%s"' % line)
 					(files, inserted, deleted) = (0, 0, 0)
 	
 	def refine(self):
@@ -753,7 +753,7 @@ class HTMLReportCreator(ReportCreator):
 					shutil.copyfile(src, path + '/' + file)
 					break
 			else:
-				print 'Warning: "%s" not found, so not copied (searched: %s)' % (file, basedirs)
+				print('Warning: "%s" not found, so not copied (searched: %s)' % (file, basedirs))
 
 		f = open(path + "/index.html", 'w')
 		format = '%Y-%m-%d %H:%M:%S'
@@ -1177,7 +1177,7 @@ class HTMLReportCreator(ReportCreator):
 		self.createGraphs(path)
 	
 	def createGraphs(self, path):
-		print 'Generating graphs...'
+		print('Generating graphs...')
 
 		# hour of day
 		f = open(path + '/hour_of_day.plot', 'w')
@@ -1379,7 +1379,7 @@ plot """
 		for f in files:
 			out = getpipeoutput([gnuplot_cmd + ' "%s"' % f])
 			if len(out) > 0:
-				print out
+				print(out)
 
 	def printHeader(self, f, title=''):
 		f.write(
@@ -1410,7 +1410,7 @@ plot """
 """)
 		
 def usage():
-	print """
+	print("""
 Usage: gitstats [options] <gitpath..> <outputpath>
 
 Options:
@@ -1420,7 +1420,7 @@ Default config values:
 %s
 
 Please see the manual page for more details.
-""" % conf
+""" % conf)
 
 
 class GitStats:
@@ -1451,37 +1451,37 @@ class GitStats:
 		except OSError:
 			pass
 		if not os.path.isdir(outputpath):
-			print 'FATAL: Output path is not a directory or does not exist'
+			print('FATAL: Output path is not a directory or does not exist')
 			sys.exit(1)
 
 		if not getgnuplotversion():
-			print 'gnuplot not found'
+			print('gnuplot not found')
 			sys.exit(1)
 
-		print 'Output path: %s' % outputpath
+		print('Output path: %s' % outputpath)
 		cachefile = os.path.join(outputpath, 'gitstats.cache')
 
 		data = GitDataCollector()
 		data.loadCache(cachefile)
 
 		for gitpath in args[0:-1]:
-			print 'Git path: %s' % gitpath
+			print('Git path: %s' % gitpath)
 
 			prevdir = os.getcwd()
 			os.chdir(gitpath)
 
-			print 'Collecting data...'
+			print('Collecting data...')
 			data.collect(gitpath)
 
 			os.chdir(prevdir)
 
-		print 'Refining data...'
+		print('Refining data...')
 		data.saveCache(cachefile)
 		data.refine()
 
 		os.chdir(rundir)
 
-		print 'Generating report...'
+		print('Generating report...')
 		report = HTMLReportCreator()
 		try:
 			report.create(data, outputpath)
@@ -1490,11 +1490,11 @@ class GitStats:
 
 		time_end = time.time()
 		exectime_internal = time_end - time_start
-		print 'Execution time %.5f secs, %.5f secs (%.2f %%) in external commands)' % (exectime_internal, exectime_external, (100.0 * exectime_external) / exectime_internal)
+		print('Execution time %.5f secs, %.5f secs (%.2f %%) in external commands)' % (exectime_internal, exectime_external, (100.0 * exectime_external) / exectime_internal))
 		if sys.stdin.isatty():
-			print 'You may now run:'
+			print('You may now run:')
 			print
-			print '   sensible-browser \'%s\'' % os.path.join(outputpath, 'index.html').replace("'", "'\\''")
+			print('   sensible-browser \'%s\'' % os.path.join(outputpath, 'index.html').replace("'", "'\\''"))
 			print
 
 if __name__ == '__main__':

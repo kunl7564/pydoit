@@ -1,8 +1,8 @@
 import os
 import random
 import time
-from utils import file_utils
-from utils.file_utils import get_filename
+from lk.utils import file_utils
+from lk.utils.file_utils import get_filename
 
 def getFileList(path, file_list):
     parents = os.listdir(path)
@@ -34,7 +34,7 @@ def generateFile(out_dir, src_list, level1_dirnum, level2_dirnum, dirfilenum):
             for k in range(dirfilenum + random.randint(0, 20)):
                 srcfile = file_list[random.randint(0, max_index)]
                 dstfile = os.path.join(level2_dir, str(random.randint(350, 9999)) + ".csv")
-                print("%s->%s"%(srcfile, dstfile))
+                print("%s->%s" % (srcfile, dstfile))
                 file_utils.copy(srcfile, dstfile)
 #                 print("%d:%s" % (k, filepath))
     return

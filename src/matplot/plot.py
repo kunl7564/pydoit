@@ -16,7 +16,7 @@ from pylab import *
 from scipy import stats
 from sklearn.metrics.pairwise import cosine_similarity
 from mpl_toolkits.mplot3d import Axes3D
-from utils import file_utils as fu
+from lk.utils import file_utils as fu
 
 
 # http://www.runoob.com/numpy/numpy-matplotlib.html

@@ -9,16 +9,16 @@ import urllib
 import chardet
 from win32api import GetSystemMetrics
 
-print 'start'
+print('start')
 # data = urllib.urlopen('http://www.tpson.cn').read()
 # print data
 x = 1
 def initFeatureList():
     global x
-    print x
+    print(x)
     x = 3
     return True
 
-print x
+print(x)
 initFeatureList();
-print x
+print(x)

@@ -9,12 +9,16 @@ def read(file_path):
         # print(f.read())
         return(f.read())
 
-def write(file_path, content):
+def write(file_path, content, append):
     pardir = os.path.dirname(file_path)
     if not os.path.exists(pardir):
         os.makedirs(pardir)
-    with open(file_path, 'w') as f:
-        f.write(content)
+    if append == True:
+        with open(file_path, 'a+') as f:
+            f.write(content)
+    else:
+        with open(file_path, 'w+') as f:
+            f.write(content)
         
 def copy(src, dist):
     if os.path.exists(src):
@@ -40,3 +44,6 @@ def get_filename(file_path):
 def mkdir(path):
     if not os.path.exists(path):
         os.makedirs(path)
+
+# def getFileDir():
+#     return os.path.split(os.path.realpath(__file__))[0]

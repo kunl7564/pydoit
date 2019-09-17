@@ -37,4 +37,4 @@ def getAllProcessMemInfo():
 #         print str(p.pid) + "\t" + p.name() + "\t" + str(p.memory_info().rss / 1024 / 1024)
     return allProcesses
 
-print getAllProcessMemInfo()
+print(getAllProcessMemInfo())

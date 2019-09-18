@@ -130,7 +130,7 @@ def main():
     gStats.sort(key=getStatKey, reverse=True)
     totalReport = u''
     for i, stat in enumerate(gStats):
-        print('%s %s' % (stat.score, stat.name))
+        print(('%s %s' % (stat.name, stat.score)).encode('utf-8'))
         if RANK_ALL == False:
             if (i + 1.0) / len(gStats) <= 0.5 or i == 0:
                 mailContent = u'本期tp分变化：' + str(stat.score) + u'，进入团队前50%，继续加油\n'

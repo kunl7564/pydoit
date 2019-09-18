@@ -1,9 +1,14 @@
 #!/usr/bin/python
 # coding=utf-8
+import codecs
 import os
 from shutil import copyfile, rmtree
 import shutil
+import sys
 
+# 
+# reload(sys)
+# sys.setdefaultencoding("utf-8")
 def read(file_path):
     if not os.path.exists(file_path):
         return

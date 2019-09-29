@@ -18,7 +18,7 @@ def dateRange(beginDate, endDate):
     return dates
 
 if __name__ == '__main__':
-    for date in dateRange('20190516', '20200101'):
+    for date in dateRange('20190916', '20200101'):
         workdayType = web_api.workdayType(date)
         isWorkday = 1
         if workdayType == 0 or workdayType == 2:
@@ -26,5 +26,5 @@ if __name__ == '__main__':
         else :
             isWorkday = 0
             
-        file_utils.write(r'd:\tmp\date_2019.csv', ('%s,%s,%s\n' % (date, workdayType, isWorkday)), True)
+        file_utils.write(r'F:\data\elecm\elec_manager\date_20160101_20190915.csv', ('%s,%s,%s\n' % (date, workdayType, isWorkday)), True)
         sleep(1)

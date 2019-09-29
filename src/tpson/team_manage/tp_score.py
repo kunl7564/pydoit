@@ -12,7 +12,6 @@ import mail_utils
 import numpy as np
 import pandas as pd
 
-
 __author__ = "Liang Kun"
 __copyright__ = "Tpson 2019"
 __version__ = "1.0.0"
@@ -32,20 +31,30 @@ class Stat:
         self.mailContent = mailContent
 
 class Scores:
-    def __init__(self, time, name, type, base, ratio, delta, description, comment):
+    def __init__(self, time, startTime, planTime, name, recorder, type, base, ratio, delta, description, comment, remark):
         self.time = time
+        self.startTime = startTime
+        self.planTime = planTime
         self.name = name
+        self.recorder = recorder
         self.type = type
         self.base = base
         self.ratio = ratio
         self.delta = delta
-        self.description = description
+        if description == description:  # NaN判断
+            self.description = description.replace('\n', '')
+        else:
+            self.description = ''
         if comment == comment:  # NaN判断
             self.comment = comment.replace('\n', '')
         else:
             self.comment = ''
+        if remark == remark:  # NaN判断
+            self.remark = remark.replace('\n', '')
+        else:
+            self.remark = ''
         # '时间    姓名    分值类型    基础分    系数    分值变化    说明    备注'
-        self.content = (u'【 %s 】 %s | 基础分%s | 系数%s | 分值变化%s | 团队评价: %s' % (description, type, base, ratio, delta, self.comment))
+        self.content = (u'【 %s 】 | 基础分%s | 系数%s | 分值变化%s | 团队评价: %s' % (description, base, ratio, delta, self.comment))
 
 gMembers = {}
 gScores = {}
@@ -66,7 +75,7 @@ def getWorkdays(beginDate, endDate):
 
 def main():
     startDate = '20190901'
-    endDate = '20190915'
+    endDate = '20190902'
     RANK_ALL = False
 
     # 读取团队
@@ -78,7 +87,7 @@ def main():
     workday_sheet = pd.read_csv(ROOT_PATH + r'\date_2019.csv', header=None)
     for i, row in workday_sheet.iterrows():
         gWorkdays[str(row[0])] = row[2]
-    baseScore = getWorkdays(startDate, endDate)
+    baseScore = 0  # getWorkdays(startDate, endDate)
 
     # 读取tp分记录
     os.chdir(ROOT_PATH)
@@ -89,15 +98,16 @@ def main():
             member_sheet = pd.read_excel(f, sheetname='record', skiprows=0)
 #             print(member_sheet.head())
             for i, row in member_sheet.iterrows():
-                if gScores.has_key(row[1]) == False:
+                if gScores.has_key(row[3]) == False:
                     scoreList = []
-                    gScores[row[1]] = scoreList
-                scoreList = gScores[row[1]]
-                scoreList.append(Scores(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7]))
+                    gScores[row[3]] = scoreList
+                scoreList = gScores[row[3]]
+                if startDate <= str(row[0]) and endDate >= str(row[0]):
+                    scoreList.append(Scores(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11]))
                 
     totalMemberNum = len(gScores)
     print(totalMemberNum)
-    
+
     # 统计分数并发送邮件
     for name in sorted(gScores.keys()):
         totalDelta = baseScore  # 工作日转换的基础分

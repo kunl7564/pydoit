@@ -48,4 +48,4 @@ def workdayType(date):
     print(str(text) + ' ' + str(date))
     return text['data']
 
-isWorkday(20190912)
+# isWorkday(20190912)

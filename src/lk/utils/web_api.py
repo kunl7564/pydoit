@@ -7,7 +7,12 @@ import urllib
 import requests
 
 key = '8da9f1a2e8c3a678e91504801b087558'
-# http://api.goseek.cn/Tools/holiday?date=20190912
+
+
+# 节假日api
+# http://api.goseek.cn/Tools/holiday?date=20190912 
+# 15天天气预报
+# http://t.weather.sojson.com/api/weather/city/101220101
 def getWeather(num):
     """
     通过快递单号获取快递详情方法
@@ -27,6 +32,7 @@ def getWeather(num):
 #         if city["cityId"] == 4:
 #             print(city)
 
+
 def isWorkday(date):
     # get请求 正常工作日对应结果为 0, 法定节假日对应结果为 1, 节假日调休补班对应的结果为 2，休息日对应结果为 3
     # {"code":10000,"data":0}
@@ -38,6 +44,7 @@ def isWorkday(date):
         return 1
     else:
         return 0
+
 
 def workdayType(date):
     # get请求 正常工作日对应结果为 0, 法定节假日对应结果为 1, 节假日调休补班对应的结果为 2，休息日对应结果为 3

@@ -3,12 +3,11 @@
 
 import datetime
 import json
+import mail_utils
 import math
 import os
 import time
 
-import file_utils
-import mail_utils
 import numpy as np
 import pandas as pd
 
@@ -164,7 +163,7 @@ def main():
         if stat.name in gMembers:
             member = gMembers[stat.name]
 #             mail_utils.sendMail(member.email, (u'[%s-%s] %s TP分更新' % (startDate, endDate, stat.name)), mailContent)
-    mail_utils.sendMail('liangkun@tpson.cn', ('[%s-%s] TP分更新汇总' % (startDate, endDate)), totalReport)
+    mail_utils.sendMail('liangkun@tpson.cn', ('[%s-%s] TP分更新汇总' % (startDate, endDate)), totalReport)    
 
 
 def getStatKey(x):

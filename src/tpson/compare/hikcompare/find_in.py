@@ -21,10 +21,13 @@ ROOT_PATH = r'.'
 gIdList = []
 gMapList = []
 
+
 class Unit:
+
     def __init__(self, index, content):
         self.index = index
         self.content = content
+
 
 def main():
     file_utils.removeFile(ROOT_PATH + r'\result.csv')
@@ -74,6 +77,7 @@ def main():
         writeContent += ',\t' + str(flag) + '\n'
         print(writeContent)
         file_utils.encodingWrite(ROOT_PATH + r'\result.csv', 'gbk', writeContent, True)
+
             
 if __name__ == '__main__':
     main()
